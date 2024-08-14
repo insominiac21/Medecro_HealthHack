@@ -1,5 +1,5 @@
 streamlit-option-menu==0.3.6
-tensorflow==2.16.0
+tensorflow
 Pillow==9.2.0
 numpy==1.23.1
 scikit-learn==1.1.1
