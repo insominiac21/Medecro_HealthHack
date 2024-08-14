@@ -1,6 +1,9 @@
-streamlit-option-menu==0.3.6
-tensorflow
-Pillow==9.2.0
-numpy==1.23.1
-scikit-learn==1.1.1
 streamlit
+tensorflow
+Pillow
+numpy
+
+
+scikit-learn==1.3.2
+
+streamlit-option-menu==0.3.6
