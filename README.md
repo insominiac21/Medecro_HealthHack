@@ -4,4 +4,11 @@ This repository contains the codebase for "Multiple Disease Prediction Streamlit
 app.py is the streamlit app code.
 run the command "**pip install -r requirements.txt**" to install the required dependencies for the streamlit app.
 
+To access the the app locally:
+After cloning the github repo type- "      streamlit run app.py          "
+
+To access on browser
+URL- https://diseasepredictor.streamlit.app/
+
+
 You may need to install additional libraries for running the jupyter notebooks.
