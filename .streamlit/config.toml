@@ -1,6 +1,6 @@
 # Theme settings 
-primaryColor = '#ec7063';# Blue 
-backgroundColor = '#48c9b0';#  Cyan 
+primaryColor = '#ec7063';#Blue 
+backgroundColor = '#48c9b0';# Cyan 
 secondaryBackgroundColor = '#48c9b0'; #Sky Blue
-textColor = '#ffffff';# White 
-font = 'sans-serif, 16';# Font size increased to 16 
+textColor = '#ffffff';#White 
+font = 'sans-serif, 16';#font size increased to 16 
