@@ -34,7 +34,7 @@ st.markdown(hide_menu_style, unsafe_allow_html=True)
 # Load the skin disease prediction model
 @st.cache_resource
 def load_model():
-    model = tf.keras.models.load_model('A:\ml\medicore_hackathon\saved_models\model.h5')
+    model = tf.keras.models.load_model('saved_models/model.h5')
     return model
 
 model = load_model()
