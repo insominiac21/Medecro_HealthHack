@@ -1,6 +1,11 @@
-# Theme settings 
-primaryColor = '#ec7063'#Blue 
-backgroundColor = '#48c9b0'# Cyan 
-secondaryBackgroundColor = '#48c9b0' #Sky Blue
-textColor = '#ffffff'#White 
-font = 'sans-serif, 13'#font size increased to 13
+[server]
+headless = true
+port = 8501
+enableCORS = false
+
+[theme]
+primaryColor = "#ec7063"
+backgroundColor = "#48c9b0"
+secondaryBackgroundColor = "#48c9b0"
+textColor = "#ffffff"
+font = "sans-serif"
