@@ -6,15 +6,35 @@ import tensorflow as tf
 from PIL import Image, ImageOps
 import numpy as np
 
+
+
+
 # Set page configuration
-st.set_page_config(page_title="Health Assistant",
+st.set_page_config(page_title="Disease Predictor",
                    layout="wide",
-                   page_icon="🧑‍⚕️")
+                   page_icon="picture1.png")
+
+hide_default_format = """
+       <style>
+       #MainMenu {visibility: hidden; }
+       footer {visibility: hidden;}
+       </style>
+       """
+st.markdown(hide_default_format, unsafe_allow_html=True)
+
+# Hide the deploy button
+hide_menu_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    </style>
+"""
+st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 # Load the skin disease prediction model
 @st.cache_resource
 def load_model():
-    model = tf.keras.models.load_model('saved_models/model.h5')
+    model = tf.keras.models.load_model('A:\ml\medicore_hackathon\saved_models\model.h5')
     return model
 
 model = load_model()
@@ -43,7 +63,7 @@ parkinsons_model = pickle.load(open(f'{working_dir}/saved_models/parkinsons_mode
 
 # Sidebar for navigation
 with st.sidebar:
-    selected = option_menu('Multiple Disease Prediction System',
+    selected = option_menu('Health Assistant',
                            ['Diabetes Prediction',
                             'Heart Disease Prediction',
                             'Parkinsons Prediction',
