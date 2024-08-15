@@ -1,0 +1,6 @@
+[theme]
+primaryColor = '#ec7063' # Blue
+backgroundColor = '#48c9b0' # cyan
+secondaryBackgroundColor = '##48c9b0' # sky blue
+textColor = '#F#fdfefe' # White
+font = 'sans serif, 16' # Increase the font size to 16
