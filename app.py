@@ -14,7 +14,7 @@ st.set_page_config(page_title="Health Assistant",
 # Load the skin disease prediction model
 @st.cache_resource
 def load_model():
-    model = tf.keras.models.load_model('A:\ml\medicore_hackathon\saved_models\model.h5')
+    model = tf.keras.models.load_model('saved_models/model.h5')
     return model
 
 model = load_model()
