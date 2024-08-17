@@ -158,7 +158,7 @@ else:
 
           /* General page styling */
         body {
-            background-color: #eaf5ff;
+            background-color: #ADD8E6;
             color: #000000;
         }
         /* Main content area styling */
