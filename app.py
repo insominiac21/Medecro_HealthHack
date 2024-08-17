@@ -41,7 +41,7 @@ if st.session_state.dark_mode:
 /* General page styling */
 body {
     background-color: #1c1c1c; /* Dark background color */
-    color: #ffffff; /* Light text color */
+    color: #ADD8E6; /* Light text color */
 }
 
 /* Main content area styling */
