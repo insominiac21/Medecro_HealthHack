@@ -242,7 +242,7 @@ else:
 
 
 # Load the skin disease prediction model
-model_path=r'C:\Users\iitia\Desktop\haCK\saved_models\model.h5'
+model_path=r'saved_models/model.h5'
 @st.cache_resource
 def load_model():
     model = tf.keras.models.load_model(model_path)
