@@ -163,7 +163,7 @@ else:
         }
         /* Main content area styling */
         [data-testid="stAppViewContainer"] {
-            background-color: #F5F5F5;
+            background-color: #FFFDD0;
             padding: 20px;
         }
         /* Header line styling */
