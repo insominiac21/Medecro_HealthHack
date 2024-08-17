@@ -7,14 +7,245 @@ from PIL import Image, ImageOps
 import numpy as np
 
 # Set page configuration
-st.set_page_config(page_title="Health Assistant",
+
+st.set_page_config(page_title="Disease Predictor",
                    layout="wide",
-                   page_icon="🧑‍⚕️")
+                   page_icon="🩺")
+
+
+# Initialize session state for dark mode
+if 'dark_mode' not in st.session_state:
+    st.session_state.dark_mode = False
+
+# Toggle dark mode on button click
+def toggle_dark_mode():
+    st.session_state.dark_mode = not st.session_state.dark_mode
+
+# Create a toggle switch for dark mode
+st.sidebar.button("Dark Mode/Light Mode", on_click=toggle_dark_mode)
+
+# Apply the appropriate styles based on the dark mode state
+if st.session_state.dark_mode:
+    # Dark Mode Styles
+    st.markdown(
+        """
+        <style>
+
+          .option-item:hover {
+        transform: scale(1.05); /* Blow-out effect */
+        transition: transform 0.2s ease-in-out;
+        background-color:#4caf50;
+        color: #ffffff;
+    }
+    
+/* General page styling */
+body {
+    background-color: #1c1c1c; /* Dark background color */
+    color: #ffffff; /* Light text color */
+}
+
+/* Main content area styling */
+[data-testid="stAppViewContainer"] {
+    background-color: #5f6368;
+    padding: 20px;
+}
+
+/* Header line styling */
+[data-testid="stHeader"] {
+    background-color: #263238; /* Dark blue-gray for a cohesive look */
+    color: #ffffff;
+    padding: 10px;
+    border-bottom: 3px solid #4a90e2; /* Lighter blue border for contrast */
+}
+
+/* Title styling */
+h1,h2,h3,h4,h5,h6 {
+    color: #ffffff; /* Light blue color for titles */
+}
+
+/* Sidebar styling */
+[data-testid="stSidebar"] {
+    background-color: #263238;
+    color: #ffffff;
+    padding: 20px;
+    border-radius:40px;
+}
+
+/* Sidebar menu items */
+.stOptionMenu > div {
+    background-color: #2e2e2e;
+    color: #ffffff;
+    border-radius: 50px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* Input block styling */
+.stTextInput > div {
+    background-color: #2e2e2e;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+[data-testid="sttextinput"]label {
+    color: #ffffff;
+}
+
+.css-1c5e6hr lable{
+color:#ffffff!important;
+}
+
+.stTextInput >div >lable {
+color:#ffffff;
+}
+
+.stNumberInput >div >lable {
+color:#ffffff;
+}
+
+.stSelectbox >div >lable {
+color:#ffffff;
+}
+
+.stTextInput > div > input {
+    background-color: #444444;
+    color: #ffffff;
+    border: 1px solid #5a5a5a;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+/* Button styling */
+.stButton > button {
+    background-color: #2e2e2e;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    transition: background-color 0.3s ease, font-weight 0.3s ease;
+}
+.stButton > button:hover {
+    background-color: #259ba7;
+    color: #000000;
+}
+
+/* Success message styling */
+.stAlert {
+    background-color: #f9f9f9;
+    color: #2d7a2d;
+    border-left: 5px solid #2d7a2d;
+    padding: 15px;
+    border-radius: 8px;
+}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+else:
+    # Light Mode Styles
+    st.markdown(
+        """
+        <style>
+   .option-item:hover {
+        transform: scale(1.05); /* Blow-out effect */
+        transition: transform 0.2s ease-in-out;
+        background-color:#4caf50;
+        color: #ffffff;
+    }
+
+          /* General page styling */
+        body {
+            background-color: #eaf5ff;
+            color: #000000;
+        }
+        /* Main content area styling */
+        [data-testid="stAppViewContainer"] {
+            background-color: #eaf5ff;
+            padding: 20px;
+        }
+        /* Header line styling */
+        [data-testid="stHeader"] {
+            background-color: #254d69;
+            color: #ffffff;
+            padding: 10px;
+            border-bottom: 3px solid #0066cc;
+        }
+        /* Title styling */
+        .stTitle {
+            color: #4a90e2;
+        }
+        /* Sidebar styling */
+        [data-testid="stSidebar"] {
+            background-color: #254d69;
+            color: #ffffff;
+            padding: 20px;
+            border-radius:40px;
+        }
+        /* Sidebar menu items */
+        .stOptionMenu > div {
+            background-color: #ffffff;
+            color: #4a4a4a;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        /* Input block styling */
+        .stTextInput > div {
+            background-color: #cfe0e8;
+            color: #000000;
+            border-radius: 8px;
+            padding: 5px;
+            margin-bottom: 20px;
+        }
+        .stTextInput > div > label {
+            color: #003366;
+        }
+        .stTextInput > div > input {
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid #004d99;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        /* Button styling */
+        .stButton > button {
+            background-color: #cfe0e8;
+            color: #000000;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            transition: background-color 0.3s ease,font-weight 0.3s ease;
+        }
+        .stButton > button:hover {
+            background-color: #259ba7;
+            color:black;
+        }
+
+        
+        /* Success message styling */
+        .stAlert {
+            background-color: #dff6f9;
+            color: #2d7a2d;
+            border-left: 5px solid #2d7a2d;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+
 
 # Load the skin disease prediction model
+model_path=r'C:\Users\iitia\Desktop\haCK\saved_models\model.h5'
 @st.cache_resource
 def load_model():
-    model = tf.keras.models.load_model('saved_models/model.h5')
+    model = tf.keras.models.load_model(model_path)
     return model
 
 model = load_model()
@@ -41,16 +272,31 @@ diabetes_model = pickle.load(open(f'{working_dir}/saved_models/diabetes_model.sa
 heart_disease_model = pickle.load(open(f'{working_dir}/saved_models/heart_disease_model.sav', 'rb'))
 parkinsons_model = pickle.load(open(f'{working_dir}/saved_models/parkinsons_model.sav', 'rb'))
 
+
 # Sidebar for navigation
+if 'selected_page' not in st.session_state:
+    st.session_state.selected_page = 'Diabetes Prediction'
+
 with st.sidebar:
-    selected = option_menu('Multiple Disease Prediction System',
+    selected = option_menu('Health Assistant',
                            ['Diabetes Prediction',
                             'Heart Disease Prediction',
                             'Parkinsons Prediction',
                             'Skin Disease Prediction'],
                            menu_icon='hospital-fill',
-                           icons=['activity', 'heart', 'person', 'emoji-smile'],
-                           default_index=0)
+                           icons=['activity', 'heart', 'person', 'sun'],
+                           default_index=0,
+                           styles={
+                               "container": {"padding": "5px","Border-radius":"50px"},
+                               "icon": {"color": "#ffa500", "font-size": "25px"},
+                               "nav-link": {"font-size": "20px", "text-align": "left", "margin": "5px", "--hover-color": "#cfe0e8", "color": "black"},
+                               "nav-link-selected": {"background-color": "#333333","color":"white"},
+                               "nav-item": {"margin": "10px", "padding": "5px", "border-radius": "5px", "transition": "all 0.3s ease-in-out"},
+                               "option-item": {"margin": "10px", "padding": "10px", "transition": "all 0.3s ease-in-out"},
+                           })
+    
+
+    st.session_state.selected_page = selected
 
 
 # Diabetes Prediction Page
@@ -58,51 +304,54 @@ if selected == 'Diabetes Prediction':
     # Page title
     st.title('Diabetes Prediction using ML')
 
-    # Getting the input data from the user
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        Pregnancies = st.text_input('Number of Pregnancies')
+        pregnancies = st.number_input('Number of Pregnancies', min_value=0, step=1, format="%d", help='e.g., 0 - 20')
 
     with col2:
-        Glucose = st.text_input('Glucose Level')
+        glucose = st.number_input('Glucose Level', min_value=0, max_value=200, step=1, format="%d", help='e.g., 80 - 200 mg/dl')
 
     with col3:
-        BloodPressure = st.text_input('Blood Pressure value')
+        bloodpressure = st.number_input('Blood Pressure (mm Hg)', min_value=0, max_value=122, step=1, format="%d", help='e.g., 50 - 122 mm Hg')
 
     with col1:
-        SkinThickness = st.text_input('Skin Thickness value')
+        skinthickness = st.number_input('Skin Thickness (mm)', min_value=0, max_value=99, step=1, format="%d", help='e.g., 10 - 99 mm')
 
     with col2:
-        Insulin = st.text_input('Insulin Level')
+        insulin = st.number_input('Insulin Level (mu U/ml)', min_value=0, max_value=846, step=1, format="%d", help='e.g., 0 - 846 mu U/ml')
 
     with col3:
-        BMI = st.text_input('BMI value')
+        bmi = st.number_input('BMI (Body Mass Index)', min_value=0.0, max_value=67.1, step=0.1, format="%.1f", help='e.g., 15.0 - 67.1')
 
     with col1:
-        DiabetesPedigreeFunction = st.text_input('Diabetes Pedigree Function value')
+        dpf = st.number_input('Diabetes Pedigree Function', min_value=0.0, max_value=2.42, step=0.01, format="%.2f", help='e.g., 0.0 - 2.42')
 
     with col2:
-        Age = st.text_input('Age of the Person')
+        age = st.number_input('Age (years)', min_value=0, max_value=122, step=1, format="%d", help='e.g., 21 - 122')
 
     # Code for Prediction
-    diab_diagnosis = ''
+    diabetes_diagnosis = ''
 
     # Creating a button for Prediction
     if st.button('Diabetes Test Result'):
-        user_input = [Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin,
-                      BMI, DiabetesPedigreeFunction, Age]
-
-        user_input = [float(x) for x in user_input]
-
-        diab_prediction = diabetes_model.predict([user_input])
-
-        if diab_prediction[0] == 1:
-            diab_diagnosis = 'The person is diabetic'
+        # Check if any required inputs are missing
+        if any(value == 0 for value in [glucose, bloodpressure, skinthickness, insulin, bmi, dpf, age]):
+            st.error("Please fill in all the input fields before making a prediction.")
         else:
-            diab_diagnosis = 'The person is not diabetic'
+            user_input = [pregnancies, glucose, bloodpressure, skinthickness, insulin, bmi, dpf, age]
 
-    st.success(diab_diagnosis)
+            # You might need to convert categorical values to numerical values if required by your model
+            user_input = [float(x) if isinstance(x, (int, float)) else x for x in user_input]
+
+            diabetes_prediction = diabetes_model.predict([user_input])
+
+            if diabetes_prediction[0] == 1:
+                diabetes_diagnosis = 'The person has diabetes'
+            else:
+                diabetes_diagnosis = 'The person does not have diabetes'
+
+    st.success(diabetes_diagnosis)
 
 # Heart Disease Prediction Page
 if selected == 'Heart Disease Prediction':
@@ -112,62 +361,75 @@ if selected == 'Heart Disease Prediction':
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        age = st.text_input('Age')
+        age = st.number_input('Age (years)', min_value=0, max_value=120, step=1, format="%d", help='e.g., 18 - 99 years')
 
     with col2:
-        sex = st.text_input('Sex')
+        sex = st.selectbox('Sex', options=['Male', 'Female'], help='Select gender')
 
     with col3:
-        cp = st.text_input('Chest Pain types')
+        cp = st.selectbox('Chest Pain types', options=['0: Typical Angina', '1: Atypical Angina', '2: Non-Anginal Pain', '3: Asymptomatic'], help='Chest Pain type')
 
     with col1:
-        trestbps = st.text_input('Resting Blood Pressure')
+        trestbps = st.number_input('Resting Blood Pressure (mm Hg)', min_value=0, max_value=200, step=1, format="%d", help='e.g., 90 - 200 mm Hg')
 
     with col2:
-        chol = st.text_input('Serum Cholesterol in mg/dl')
+        chol = st.number_input('Serum Cholesterol in mg/dl', min_value=0, max_value=600, step=1, format="%d", help='e.g., 100 - 600 mg/dl')
 
     with col3:
-        fbs = st.text_input('Fasting Blood Sugar > 120 mg/dl')
+        fbs = st.selectbox('Fasting Blood Sugar > 120 mg/dl', options=['0: False', '1: True'], help='Fasting Blood Sugar level')
 
     with col1:
-        restecg = st.text_input('Resting Electrocardiographic results')
+        restecg = st.selectbox('Resting Electrocardiographic results', options=['0: Normal', '1: Having ST-T wave abnormality', '2: Showing probable or definite left ventricular hypertrophy'], help='Resting Electrocardiographic results')
 
     with col2:
-        thalach = st.text_input('Maximum Heart Rate achieved')
+        thalach = st.number_input('Maximum Heart Rate achieved', min_value=0, max_value=250, step=1, format="%d", help='e.g., 60 - 250')
 
     with col3:
-        exang = st.text_input('Exercise Induced Angina')
+        exang = st.selectbox('Exercise Induced Angina', options=['0: No', '1: Yes'], help='Exercise Induced Angina')
 
     with col1:
-        oldpeak = st.text_input('ST depression induced by exercise')
+        oldpeak = st.number_input('ST depression induced by exercise', min_value=0.0, max_value=6.0, step=0.1, format="%.1f", help='e.g., 0.0 - 6.0')
 
     with col2:
-        slope = st.text_input('Slope of the peak exercise ST segment')
+        slope = st.selectbox('Slope of the peak exercise ST segment', options=['0: Upsloping', '1: Flat', '2: Downsloping'], help='Slope of peak exercise ST segment')
 
     with col3:
-        ca = st.text_input('Major vessels colored by fluoroscopy')
+        ca = st.number_input('Major vessels colored by fluoroscopy', min_value=0, max_value=4, step=1, format="%d", help='e.g., 0 - 3')
 
     with col1:
-        thal = st.text_input('Thal: 0 = normal; 1 = fixed defect; 2 = reversible defect')
+        thal = st.selectbox('Thal: 0 = normal; 1 = fixed defect; 2 = reversible defect', options=['0: Normal', '1: Fixed defect', '2: Reversible defect'], help='Thalassemia')
 
     # Code for Prediction
     heart_diagnosis = ''
 
     # Creating a button for Prediction
     if st.button('Heart Disease Test Result'):
-        user_input = [age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal]
-
-        user_input = [float(x) for x in user_input]
-
-        heart_prediction = heart_disease_model.predict([user_input])
-
-        if heart_prediction[0] == 1:
-            heart_diagnosis = 'The person is having heart disease'
+        # Check if any required inputs are missing
+        if any(value == 0 for value in [age, trestbps, chol, thalach, oldpeak, ca]) or any(value == '' for value in [sex, cp, fbs, restecg, exang, slope, thal]):
+            st.error("Please fill in all the input fields before making a prediction.")
         else:
-            heart_diagnosis = 'The person does not have any heart disease'
+            # Convert categorical values to numerical values
+            sex_num = 1 if sex == 'Male' else 0
+            cp_num = int(cp.split(':')[0])
+            fbs_num = int(fbs.split(':')[0])
+            restecg_num = int(restecg.split(':')[0])
+            exang_num = int(exang.split(':')[0])
+            slope_num = int(slope.split(':')[0])
+            thal_num = int(thal.split(':')[0])
+
+            # Prepare the user input list
+            user_input = [age, sex_num, cp_num, trestbps, chol, fbs_num, restecg_num, thalach, exang_num, oldpeak, slope_num, ca, thal_num]
+
+            # Predict
+            heart_prediction = heart_disease_model.predict([user_input])
+
+            if heart_prediction[0] == 1:
+                heart_diagnosis = 'The person is having heart disease'
+            else:
+                heart_diagnosis = 'The person does not have any heart disease'
 
     st.success(heart_diagnosis)
-
+    
 # Parkinson's Prediction Page
 if selected == "Parkinsons Prediction":
     # Page title
@@ -176,90 +438,97 @@ if selected == "Parkinsons Prediction":
     col1, col2, col3, col4, col5 = st.columns(5)
 
     with col1:
-        fo = st.text_input('MDVP:Fo(Hz)')
+        fo = st.number_input('MDVP:Fo (Hz)', min_value=0.0, format="%.2f", help='e.g., 50.0 - 200.0 Hz')
 
     with col2:
-        fhi = st.text_input('MDVP:Fhi(Hz)')
+        fhi = st.number_input('MDVP:Fhi (Hz)', min_value=0.0, format="%.2f", help='e.g., 100.0 - 400.0 Hz')
 
     with col3:
-        flo = st.text_input('MDVP:Flo(Hz)')
+        flo = st.number_input('MDVP:Flo (Hz)', min_value=0.0, format="%.2f", help='e.g., 50.0 - 150.0 Hz')
 
     with col4:
-        Jitter_percent = st.text_input('MDVP:Jitter(%)')
+        Jitter_percent = st.number_input('MDVP:Jitter (%)', min_value=0.0, format="%.2f", help='e.g., 0.0 - 10.0 %')
 
     with col5:
-        Jitter_Abs = st.text_input('MDVP:Jitter(Abs)')
+        Jitter_Abs = st.number_input('MDVP:Jitter (Abs)', min_value=0.0, format="%.2f", help='e.g., 0.0 - 0.2')
 
     with col1:
-        RAP = st.text_input('MDVP:RAP')
+        RAP = st.number_input('MDVP:RAP', min_value=0.0, format="%.2f", help='e.g., 0.0 - 0.2')
 
     with col2:
-        PPQ = st.text_input('MDVP:PPQ')
+        PPQ = st.number_input('MDVP:PPQ', min_value=0.0, format="%.2f", help='e.g., 0.0 - 0.2')
 
     with col3:
-        DDP = st.text_input('Jitter:DDP')
+        DDP = st.number_input('Jitter:DDP', min_value=0.0, format="%.2f", help='e.g., 0.0 - 1.0')
 
     with col4:
-        Shimmer = st.text_input('MDVP:Shimmer')
+        Shimmer = st.number_input('MDVP:Shimmer', min_value=0.0, format="%.2f", help='e.g., 0.0 - 0.2')
 
     with col5:
-        Shimmer_dB = st.text_input('MDVP:Shimmer(dB)')
+        Shimmer_dB = st.number_input('MDVP:Shimmer (dB)', min_value=0.0, format="%.2f", help='e.g., 0.0 - 5.0')
 
     with col1:
-        APQ3 = st.text_input('Shimmer:APQ3')
+        APQ3 = st.number_input('Shimmer:APQ3', min_value=0.0, format="%.2f", help='e.g., 0.0 - 0.2')
 
     with col2:
-        APQ5 = st.text_input('Shimmer:APQ5')
+        APQ5 = st.number_input('Shimmer:APQ5', min_value=0.0, format="%.2f", help='e.g., 0.0 - 0.2')
 
     with col3:
-        APQ = st.text_input('MDVP:APQ')
+        APQ = st.number_input('MDVP:APQ', min_value=0.0, format="%.2f", help='e.g., 0.0 - 0.2')
 
     with col4:
-        DDA = st.text_input('Shimmer:DDA')
+        DDA = st.number_input('Shimmer:DDA', min_value=0.0, format="%.2f", help='e.g., 0.0 - 0.2')
 
     with col5:
-        NHR = st.text_input('NHR')
+        NHR = st.number_input('NHR', min_value=0.0, format="%.2f", help='e.g., 0.0 - 0.2')
 
     with col1:
-        HNR = st.text_input('HNR')
+        HNR = st.number_input('HNR', min_value=0.0, format="%.2f", help='e.g., 0.0 - 20.0')
 
     with col2:
-        RPDE = st.text_input('RPDE')
+        RPDE = st.number_input('RPDE', min_value=0.0, format="%.2f", help='e.g., 0.0 - 1.0')
 
     with col3:
-        DFA = st.text_input('DFA')
+        DFA = st.number_input('DFA', min_value=0.0, format="%.2f", help='e.g., 0.0 - 1.0')
 
     with col4:
-        spread1 = st.text_input('spread1')
+        spread1 = st.number_input('spread1', min_value=0.0, format="%.2f", help='e.g., 0.0 - 1.0')
 
     with col5:
-        spread2 = st.text_input('spread2')
+        spread2 = st.number_input('spread2', min_value=0.0, format="%.2f", help='e.g., 0.0 - 1.0')
 
     with col1:
-        D2 = st.text_input('D2')
+        D2 = st.number_input('D2', min_value=0.0, format="%.2f", help='e.g., 0.0 - 10.0')
 
     with col2:
-        PPE = st.text_input('PPE')
+        PPE = st.number_input('PPE', min_value=0.0, format="%.2f", help='e.g., 0.0 - 5.0')
 
     # Code for Prediction
     parkinsons_diagnosis = ''
 
     # Creating a button for Prediction    
     if st.button("Parkinson's Test Result"):
-        user_input = [fo, fhi, flo, Jitter_percent, Jitter_Abs,
+        # Check if any input is empty
+        if any(value == 0 for value in [fo, fhi, flo, Jitter_percent, Jitter_Abs,
                       RAP, PPQ, DDP, Shimmer, Shimmer_dB, APQ3, APQ5,
-                      APQ, DDA, NHR, HNR, RPDE, DFA, spread1, spread2, D2, PPE]
-
-        user_input = [float(x) for x in user_input]
-
-        parkinsons_prediction = parkinsons_model.predict([user_input])
-
-        if parkinsons_prediction[0] == 1:
-            parkinsons_diagnosis = "The person has Parkinson's disease"
+                      APQ, DDA, NHR, HNR, RPDE, DFA, spread1, spread2, D2, PPE]):
+            st.error("Please fill in all the input fields before making a prediction.")
         else:
-            parkinsons_diagnosis = "The person does not have Parkinson's disease"
+            user_input = [fo, fhi, flo, Jitter_percent, Jitter_Abs,
+                          RAP, PPQ, DDP, Shimmer, Shimmer_dB, APQ3, APQ5,
+                          APQ, DDA, NHR, HNR, RPDE, DFA, spread1, spread2, D2, PPE]
+
+            user_input = [float(x) for x in user_input]
+
+            parkinsons_prediction = parkinsons_model.predict([user_input])
+
+            if parkinsons_prediction[0] == 1:
+                parkinsons_diagnosis = "The person has Parkinson's disease"
+            else:
+                parkinsons_diagnosis = "The person does not have Parkinson's disease"
 
     st.success(parkinsons_diagnosis)
+
 
 # Skin Disease Prediction Page
 if selected == "Skin Disease Prediction":
@@ -375,7 +644,7 @@ if selected == "Skin Disease Prediction":
                         st.write(value)
 
         except Exception as e:
-
+            
             st.error(
                 """
                 An error occurred while processing the image:
@@ -386,3 +655,5 @@ if selected == "Skin Disease Prediction":
                 **Error details:** {}
                 """.format(e)
             )
+
+
