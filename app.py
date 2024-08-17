@@ -153,7 +153,7 @@ else:
         transform: scale(1.05); /* Blow-out effect */
         transition: transform 0.2s ease-in-out;
         background-color:#4caf50;
-        color: #ffffff;
+        color: #F5F5F5;
     }
 
           /* General page styling */
