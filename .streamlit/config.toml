@@ -3,5 +3,5 @@
 primaryColor = '##E3A857' 
 backgroundColor = '#069db8' 
 secondaryBackgroundColor = '#069db8'
-textColor = '#87e2e8' 
+textColor = '#000000' 
 font = 'sans serif, 11' 
