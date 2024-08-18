@@ -41,7 +41,7 @@ if st.session_state.dark_mode:
 /* General page styling */
 body {
     background-color: #1c1c1c; /* Dark background color */
-    color: #ffffff; /* Light text color */
+    color: #ADD8E6; /* Light text color */
 }
 
 /* Main content area styling */
@@ -153,17 +153,17 @@ else:
         transform: scale(1.05); /* Blow-out effect */
         transition: transform 0.2s ease-in-out;
         background-color:#4caf50;
-        color: #ffffff;
+        color: #F5F5F5;
     }
 
           /* General page styling */
         body {
-            background-color: #eaf5ff;
+            background-color: #ADD8E6;
             color: #000000;
         }
         /* Main content area styling */
         [data-testid="stAppViewContainer"] {
-            background-color: #eaf5ff;
+            background-color: #EAEAEA;
             padding: 20px;
         }
         /* Header line styling */
