@@ -656,4 +656,3 @@ if selected == "Skin Disease Prediction":
                 """.format(e)
             )
 
-
