@@ -287,7 +287,7 @@ with st.sidebar:
                            icons=['activity', 'heart', 'person', 'sun'],
                            default_index=0,
                            styles={
-                               "container": {"padding": "5px","Border-radius":"50px"},
+                               "container": {"padding": "5px","Border-radius":"0px"},
                                "icon": {"color": "#ffa500", "font-size": "25px"},
                                "nav-link": {"font-size": "20px", "text-align": "left", "margin": "5px", "--hover-color": "#cfe0e8", "color": "black"},
                                "nav-link-selected": {"background-color": "#333333","color":"white"},
