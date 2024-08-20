@@ -163,7 +163,7 @@ else:
         }
         /* Main content area styling */
         [data-testid="stAppViewContainer"] {
-            background-color: #FFFFFF;
+            background-color: #EAEAEA;
             padding: 20px;
         }
         /* Header line styling */
@@ -655,4 +655,3 @@ if selected == "Skin Disease Prediction":
                 **Error details:** {}
                 """.format(e)
             )
-
