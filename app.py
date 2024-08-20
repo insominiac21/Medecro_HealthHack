@@ -159,7 +159,7 @@ else:
           /* General page styling */
         body {
             background-color: #ADD8E6;
-            color: #FFFFFF;
+            color: #000000;
         }
         /* Main content area styling */
         [data-testid="stAppViewContainer"] {
